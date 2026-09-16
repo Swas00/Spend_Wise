@@ -1,0 +1,297 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --color-amber-50: var(--p-50);
+  --color-amber-100: var(--p-100);
+  --color-amber-200: var(--p-200);
+  --color-amber-300: var(--p-300);
+  --color-amber-400: var(--p-400);
+  --color-amber-500: var(--p-500);
+  --color-amber-600: var(--p-600);
+  --color-amber-700: var(--p-700);
+  --color-amber-800: var(--p-800);
+  --color-amber-900: var(--p-900);
+  --color-amber-950: var(--p-950);
+}
+
+@layer base {
+  :root, [data-color-theme="emerald"] {
+    --p-50: #ecfdf5;
+    --p-100: #d1fae5;
+    --p-200: #a7f3d0;
+    --p-300: #6ee7b7;
+    --p-400: #34d399;
+    --p-500: #10b981;
+    --p-600: #059669;
+    --p-700: #047857;
+    --p-800: #065f46;
+    --p-900: #064e3b;
+    --p-950: #022c22;
+    --theme-glow: rgba(16, 185, 129, 0.2);
+    --bg-main: #f8fafc;
+    --card-bg: #ffffff;
+  }
+
+  [data-color-theme="indigo"] {
+    --p-50: #eef2ff;
+    --p-100: #e0e7ff;
+    --p-200: #c7d2fe;
+    --p-300: #a5b4fc;
+    --p-400: #818cf8;
+    --p-500: #6366f1;
+    --p-600: #4f46e5;
+    --p-700: #4338ca;
+    --p-800: #3730a3;
+    --p-900: #312e81;
+    --p-950: #1e1b4b;
+    --theme-glow: rgba(99, 102, 241, 0.2);
+    --bg-main: #f8fafc;
+    --card-bg: #ffffff;
+  }
+
+  [data-color-theme="ocean"] {
+    --p-50: #f0f9ff;
+    --p-100: #e0f2fe;
+    --p-200: #bae6fd;
+    --p-300: #7dd3fc;
+    --p-400: #38bdf8;
+    --p-500: #0ea5e9;
+    --p-600: #0284c7;
+    --p-700: #0369a1;
+    --p-800: #075985;
+    --p-900: #0c4a6e;
+    --p-950: #082f49;
+    --theme-glow: rgba(14, 165, 233, 0.2);
+    --bg-main: #f8fafc;
+    --card-bg: #ffffff;
+  }
+
+  [data-color-theme="rose"] {
+    --p-50: #fff1f2;
+    --p-100: #ffe4e6;
+    --p-200: #fecdd3;
+    --p-300: #fda4af;
+    --p-400: #fb7185;
+    --p-500: #f43f5e;
+    --p-600: #e11d48;
+    --p-700: #be123c;
+    --p-800: #9f1239;
+    --p-900: #881337;
+    --p-950: #4c0519;
+    --theme-glow: rgba(244, 63, 94, 0.2);
+    --bg-main: #f8fafc;
+    --card-bg: #ffffff;
+  }
+
+  [data-color-theme="amber"] {
+    --p-50: #fffbeb;
+    --p-100: #fef3c7;
+    --p-200: #fde68a;
+    --p-300: #fcd34d;
+    --p-400: #fbbf24;
+    --p-500: #f59e0b;
+    --p-600: #d97706;
+    --p-700: #b45309;
+    --p-800: #92400e;
+    --p-900: #78350f;
+    --p-950: #451a03;
+    --theme-glow: rgba(245, 158, 11, 0.2);
+    --bg-main: #f8fafc;
+    --card-bg: #ffffff;
+  }
+
+  body {
+    margin: 0;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: transparent;
+    color: #0f172a;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    transition: color 0.3s ease;
+  }
+
+  html.dark body {
+    color: #f8fafc;
+  }
+}
+
+/* -------------------------------------------------------------
+   Classic & Animation Utilities
+------------------------------------------------------------- */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes floatAnimation {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(212, 175, 55, 0);
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes soundWave {
+  0%, 100% {
+    height: 8px;
+    opacity: 0.45;
+  }
+  50% {
+    height: 26px;
+    opacity: 1;
+  }
+}
+
+.animate-sound-wave-1 { animation: soundWave 0.65s ease-in-out infinite 0.0s; }
+.animate-sound-wave-2 { animation: soundWave 0.65s ease-in-out infinite 0.12s; }
+.animate-sound-wave-3 { animation: soundWave 0.65s ease-in-out infinite 0.24s; }
+.animate-sound-wave-4 { animation: soundWave 0.65s ease-in-out infinite 0.36s; }
+.animate-sound-wave-5 { animation: soundWave 0.65s ease-in-out infinite 0.18s; }
+
+.animate-fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-float {
+  animation: floatAnimation 3s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: pulseGlow 2.5s infinite;
+}
+
+/* Stagger delays for cascading reveals */
+.stagger-1 { animation-delay: 60ms; }
+.stagger-2 { animation-delay: 120ms; }
+.stagger-3 { animation-delay: 180ms; }
+.stagger-4 { animation-delay: 240ms; }
+.stagger-5 { animation-delay: 300ms; }
+.stagger-6 { animation-delay: 360ms; }
+
+/* Modern Fintech Card Styling */
+.classic-card {
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -2px rgba(0, 0, 0, 0.03);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.classic-card:hover {
+  border-color: rgba(203, 213, 225, 1);
+  box-shadow: 0 16px 28px -6px rgba(0, 0, 0, 0.07), 0 6px 12px -4px rgba(0, 0, 0, 0.04);
+  transform: translateY(-2px);
+}
+
+:where(.dark, .dark *) .classic-card {
+  background-color: rgba(15, 23, 42, 0.85);
+  border-color: rgba(51, 65, 85, 0.7);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+}
+
+:where(.dark, .dark *) .classic-card:hover {
+  border-color: var(--color-amber-500);
+  box-shadow: 0 20px 35px -5px rgba(0, 0, 0, 0.6), 0 0 25px -4px var(--theme-glow);
+}
+
+.classic-font-serif {
+  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+/* Interactive press animation */
+.btn-press {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-press:active {
+  transform: scale(0.97);
+}
+
+/* Accessible Reduced Motion Fallback */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .classic-card:hover {
+    transform: none !important;
+  }
+}

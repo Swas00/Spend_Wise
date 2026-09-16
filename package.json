@@ -1,0 +1,23 @@
+{
+  "name": "spendwise",
+  "version": "1.0.0",
+  "description": "SpendWise - Personal Expense Tracker",
+  "private": true,
+  "scripts": {
+    "build": "npm --prefix frontend run build",
+    "start": "node backend/server.js",
+    "server": "npm --prefix backend run dev",
+    "client": "npm --prefix frontend run dev",
+    "install:all": "npm --prefix backend install && npm --prefix frontend install"
+  },
+  "keywords": [
+    "expense-tracker",
+    "personal-finance",
+    "mern",
+    "react",
+    "express",
+    "mongodb"
+  ],
+  "author": "",
+  "license": "ISC"
+}

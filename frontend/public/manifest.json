@@ -1,0 +1,20 @@
+{
+  "name": "SpendWise - Personal Expense Tracker",
+  "short_name": "SpendWise",
+  "description": "Personal ledger and expense tracking system with analytics and category management.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a1128",
+  "theme_color": "#0a1128",
+  "categories": ["finance", "productivity"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
