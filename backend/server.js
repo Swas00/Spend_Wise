@@ -50,12 +50,25 @@ app.listen(PORT, () => {
   console.log(`SpendWise Server running on port ${PORT}`);
 });
 
-if (!process.env.MONGO_URI) {
+let rawMongoUri = process.env.MONGO_URI ? process.env.MONGO_URI.trim() : "";
+// Clean up any accidental wrapping quotes
+if (
+  (rawMongoUri.startsWith('"') && rawMongoUri.endsWith('"')) ||
+  (rawMongoUri.startsWith("'") && rawMongoUri.endsWith("'"))
+) {
+  rawMongoUri = rawMongoUri.slice(1, -1).trim();
+}
+// Clean up accidental "MONGO_URI=" prefix if pasted into the value box
+if (rawMongoUri.startsWith("MONGO_URI=")) {
+  rawMongoUri = rawMongoUri.replace(/^MONGO_URI=\s*/, "").trim();
+}
+
+if (!rawMongoUri) {
   console.error("CRITICAL ERROR: MONGO_URI environment variable is missing!");
   console.error("Please add MONGO_URI to your Render dashboard under Environment variables.");
 } else {
   mongoose
-    .connect(process.env.MONGO_URI)
+    .connect(rawMongoUri)
     .then(() => {
       console.log("MongoDB connected successfully");
     })
