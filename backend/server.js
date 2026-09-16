@@ -45,16 +45,21 @@ if (fs.existsSync(distPath)) {
   });
 }
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log("MongoDB connected");
+const PORT = process.env.PORT || 5001;
+app.listen(PORT, () => {
+  console.log(`SpendWise Server running on port ${PORT}`);
+});
 
-    const PORT = process.env.PORT || 5001;
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
+if (!process.env.MONGO_URI) {
+  console.error("CRITICAL ERROR: MONGO_URI environment variable is missing!");
+  console.error("Please add MONGO_URI to your Render dashboard under Environment variables.");
+} else {
+  mongoose
+    .connect(process.env.MONGO_URI)
+    .then(() => {
+      console.log("MongoDB connected successfully");
+    })
+    .catch((error) => {
+      console.error("MongoDB connection error:", error.message);
     });
-  })
-  .catch((error) => {
-    console.log("MongoDB connection error:", error.message);
-  });
+}
