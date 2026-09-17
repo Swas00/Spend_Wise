@@ -12,6 +12,10 @@ export function ThemeProvider({ children }) {
     return "dark"; // Default to dark mode
   });
 
+  const [rememberTheme, setRememberTheme] = useState(() => {
+    return localStorage.getItem("spendwise-remember-theme") === "true";
+  });
+
   const [colorTheme, setColorTheme] = useState(() => {
     const savedColor = localStorage.getItem("spendwise-color-theme");
     const valid = AVAILABLE_THEMES.some((t) => t.id === savedColor);
@@ -31,8 +35,23 @@ export function ThemeProvider({ children }) {
   useEffect(() => {
     const root = document.documentElement;
     root.setAttribute("data-color-theme", colorTheme);
-    localStorage.setItem("spendwise-color-theme", colorTheme);
-  }, [colorTheme]);
+    if (rememberTheme) {
+      localStorage.setItem("spendwise-color-theme", colorTheme);
+      localStorage.setItem("spendwise-remember-theme", "true");
+    }
+  }, [colorTheme, rememberTheme]);
+
+  const updateThemePreference = (newColor, remember = true) => {
+    setColorTheme(newColor);
+    setRememberTheme(remember);
+    if (remember) {
+      localStorage.setItem("spendwise-remember-theme", "true");
+      localStorage.setItem("spendwise-color-theme", newColor);
+    } else {
+      localStorage.removeItem("spendwise-remember-theme");
+      localStorage.removeItem("spendwise-color-theme");
+    }
+  };
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
@@ -45,6 +64,9 @@ export function ThemeProvider({ children }) {
         toggleTheme,
         colorTheme,
         setColorTheme,
+        rememberTheme,
+        setRememberTheme,
+        updateThemePreference,
         availableThemes: AVAILABLE_THEMES
       }}
     >
