@@ -374,3 +374,43 @@ export const askAIAdvisor = async (query) => {
   }
   return data;
 };
+
+// -------------------------------------------------------------
+// Sovereign Admin Command Center Endpoints
+// -------------------------------------------------------------
+
+export const getAdminStats = async () => {
+  const response = await fetch(`${BASE_URL}/api/admin/stats`, {
+    headers: getAuthHeaders()
+  });
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.message || "Failed to retrieve admin platform metrics");
+  }
+  return response.json();
+};
+
+export const getAdminUsers = async () => {
+  const response = await fetch(`${BASE_URL}/api/admin/users`, {
+    headers: getAuthHeaders()
+  });
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.message || "Failed to retrieve student directory");
+  }
+  return response.json();
+};
+
+export const updateUserRole = async (userId, role) => {
+  const response = await fetch(`${BASE_URL}/api/admin/users/${userId}/role`, {
+    method: "PATCH",
+    headers: getAuthHeaders(),
+    body: JSON.stringify({ role })
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to update user authorization role");
+  }
+  return data;
+};
+

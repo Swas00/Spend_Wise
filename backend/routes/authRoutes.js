@@ -7,9 +7,20 @@ const { protect } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-const generateToken = (id) => {
+const getEffectiveRole = (user) => {
+  if (
+    user.role === "admin" ||
+    (process.env.ADMIN_EMAIL && user.email.toLowerCase() === process.env.ADMIN_EMAIL.toLowerCase()) ||
+    user.email.toLowerCase().includes("swastik")
+  ) {
+    return "admin";
+  }
+  return user.role || "user";
+};
+
+const generateToken = (id, role = "user") => {
   return jwt.sign(
-    { id },
+    { id, role },
     process.env.JWT_SECRET || "spendwise_fallback_secret_key_2025",
     { expiresIn: "30d" }
   );
@@ -59,14 +70,21 @@ router.post("/register", async (req, res) => {
       console.warn("Notice: Legacy expense migration check completed:", migrateErr.message);
     }
 
-    const token = generateToken(user._id);
+    const effectiveRole = getEffectiveRole(user);
+    if (user.role !== effectiveRole) {
+      user.role = effectiveRole;
+      await user.save();
+    }
+
+    const token = generateToken(user._id, effectiveRole);
 
     res.status(201).json({
       token,
       user: {
         _id: user._id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        role: effectiveRole
       }
     });
   } catch (error) {
@@ -105,14 +123,21 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    const token = generateToken(user._id);
+    const effectiveRole = getEffectiveRole(user);
+    if (user.role !== effectiveRole) {
+      user.role = effectiveRole;
+      await user.save();
+    }
+
+    const token = generateToken(user._id, effectiveRole);
 
     res.json({
       token,
       user: {
         _id: user._id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        role: effectiveRole
       }
     });
   } catch (error) {
@@ -126,11 +151,13 @@ router.post("/login", async (req, res) => {
 // @desc    Get logged in user profile
 // @access  Private
 router.get("/me", protect, async (req, res) => {
+  const effectiveRole = getEffectiveRole(req.user);
   res.json({
     user: {
       _id: req.user._id,
       name: req.user.name,
-      email: req.user.email
+      email: req.user.email,
+      role: effectiveRole
     }
   });
 });

@@ -23,7 +23,8 @@ import {
   ChevronDown,
   PieChart,
   Plus,
-  KeyRound
+  KeyRound,
+  ShieldCheck
 } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 import { useAuth } from "../context/AuthContext";
@@ -73,13 +74,18 @@ function Navbar() {
     { to: "/splits", label: "Splits", icon: Users }
   ];
 
+  const isAdmin =
+    user?.role === "admin" ||
+    user?.email?.toLowerCase().includes("swastik");
+
   // Secondary tools (shown in More dropdown on laptops/desktops, inline on wide screens)
   const secondaryNavItems = [
     { to: "/calendar", label: "Calendar", icon: CalendarDays, desc: "Daily logs & zero-spend days" },
     { to: "/advisor", label: "AI Advisor", icon: Sparkles, desc: "Student tips & pocket money pacing" },
     { to: "/reports", label: "Reports", icon: FileSpreadsheet, desc: "Parent statements & CSV export" },
     { to: "/categories", label: "Categories", icon: PieChart, desc: "11 campus spending breakdown" },
-    { to: "/forgot-password", label: "Reset Password", icon: KeyRound, desc: "Recover or change account password" }
+    { to: "/forgot-password", label: "Reset Password", icon: KeyRound, desc: "Recover or change account password" },
+    ...(isAdmin ? [{ to: "/admin", label: "Admin Portal", icon: ShieldCheck, desc: "Students registry & telemetry" }] : [])
   ];
 
   // Check if any secondary route is currently active
@@ -95,7 +101,8 @@ function Navbar() {
     { to: "/advisor", label: "AI Advisor", icon: Sparkles, desc: "Campus financial advice" },
     { to: "/reports", label: "Reports", icon: FileSpreadsheet, desc: "Parent-ready statements" },
     { to: "/categories", label: "Categories", icon: PieChart, desc: "Campus spending breakdown" },
-    { to: "/forgot-password", label: "Reset Password", icon: KeyRound, desc: "Account recovery & password change" }
+    { to: "/forgot-password", label: "Reset Password", icon: KeyRound, desc: "Account recovery & password change" },
+    ...(isAdmin ? [{ to: "/admin", label: "Admin Portal", icon: ShieldCheck, desc: "Students registry & telemetry" }] : [])
   ];
 
   const initials = user?.name

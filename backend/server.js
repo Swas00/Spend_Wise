@@ -13,6 +13,7 @@ const budgetRoutes = require("./routes/budgetRoutes");
 const goalRoutes = require("./routes/goalRoutes");
 const splitRoutes = require("./routes/splitRoutes");
 const advisorRoutes = require("./routes/advisorRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use("/api/budgets", budgetRoutes);
 app.use("/api/goals", goalRoutes);
 app.use("/api/splits", splitRoutes);
 app.use("/api/advisor", advisorRoutes);
+app.use("/api/admin", adminRoutes);
 
 // Serve static frontend build if present
 const distPath = path.join(__dirname, "../frontend/dist");
