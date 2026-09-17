@@ -22,7 +22,8 @@ import {
   Check,
   ChevronDown,
   PieChart,
-  Plus
+  Plus,
+  KeyRound
 } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 import { useAuth } from "../context/AuthContext";
@@ -77,7 +78,8 @@ function Navbar() {
     { to: "/calendar", label: "Calendar", icon: CalendarDays, desc: "Daily logs & zero-spend days" },
     { to: "/advisor", label: "AI Advisor", icon: Sparkles, desc: "Student tips & pocket money pacing" },
     { to: "/reports", label: "Reports", icon: FileSpreadsheet, desc: "Parent statements & CSV export" },
-    { to: "/categories", label: "Categories", icon: PieChart, desc: "11 campus spending breakdown" }
+    { to: "/categories", label: "Categories", icon: PieChart, desc: "11 campus spending breakdown" },
+    { to: "/forgot-password", label: "Reset Password", icon: KeyRound, desc: "Recover or change account password" }
   ];
 
   // Check if any secondary route is currently active
@@ -92,7 +94,8 @@ function Navbar() {
     { to: "/calendar", label: "Calendar", icon: CalendarDays, desc: "Daily timeline view" },
     { to: "/advisor", label: "AI Advisor", icon: Sparkles, desc: "Campus financial advice" },
     { to: "/reports", label: "Reports", icon: FileSpreadsheet, desc: "Parent-ready statements" },
-    { to: "/categories", label: "Categories", icon: PieChart, desc: "Campus spending breakdown" }
+    { to: "/categories", label: "Categories", icon: PieChart, desc: "Campus spending breakdown" },
+    { to: "/forgot-password", label: "Reset Password", icon: KeyRound, desc: "Account recovery & password change" }
   ];
 
   const initials = user?.name

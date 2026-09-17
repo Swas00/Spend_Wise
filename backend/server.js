@@ -30,11 +30,18 @@ app.use("/api/advisor", advisorRoutes);
 // Serve static frontend build if present
 const distPath = path.join(__dirname, "../frontend/dist");
 if (fs.existsSync(distPath)) {
-  app.use(express.static(distPath));
+  app.use(express.static(distPath, {
+    setHeaders: (res, filePath) => {
+      if (filePath.endsWith("index.html")) {
+        res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+      }
+    }
+  }));
 
   // SPA fallback for client-side routing (compatible with Express 5)
   app.use((req, res, next) => {
     if ((req.method === "GET" || req.method === "HEAD") && !req.path.startsWith("/api")) {
+      res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
       return res.sendFile(path.join(distPath, "index.html"));
     }
     next();
