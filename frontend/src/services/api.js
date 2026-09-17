@@ -73,6 +73,51 @@ export const getProfile = async () => {
   return data;
 };
 
+export const requestPasswordReset = async (email) => {
+  const response = await fetch(`${BASE_URL}/api/auth/forgot-password`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ email })
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to request password reset");
+  }
+  return data;
+};
+
+export const verifyRecoveryCode = async (email, code) => {
+  const response = await fetch(`${BASE_URL}/api/auth/verify-recovery-code`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ email, code })
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Invalid or expired recovery code");
+  }
+  return data;
+};
+
+export const resetPassword = async (payload) => {
+  const response = await fetch(`${BASE_URL}/api/auth/reset-password`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to reset password");
+  }
+  return data;
+};
+
 // -------------------------------------------------------------
 // Expenses Endpoints (Authenticated)
 // -------------------------------------------------------------
